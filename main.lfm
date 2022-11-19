@@ -1,0 +1,150 @@
+object Form1: TForm1
+  Left = 397
+  Height = 548
+  Top = 250
+  Width = 1017
+  Caption = 'Master detail test'
+  ClientHeight = 548
+  ClientWidth = 1017
+  object DBNavigator1: TDBNavigator
+    Left = 24
+    Height = 25
+    Top = 25
+    Width = 241
+    BevelOuter = bvNone
+    ChildSizing.EnlargeHorizontal = crsScaleChilds
+    ChildSizing.EnlargeVertical = crsScaleChilds
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 100
+    ClientHeight = 25
+    ClientWidth = 241
+    DataSource = DataSource1
+    Options = []
+    TabOrder = 0
+  end
+  object DBGrid1: TDBGrid
+    Left = 24
+    Height = 221
+    Top = 80
+    Width = 960
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Color = clWindow
+    Columns = <>
+    DataSource = DataSource1
+    TabOrder = 1
+  end
+  object DBGrid2: TDBGrid
+    Left = 24
+    Height = 144
+    Top = 352
+    Width = 960
+    Anchors = [akLeft, akRight, akBottom]
+    Color = clWindow
+    Columns = <>
+    DataSource = DataSource2
+    TabOrder = 2
+  end
+  object DBNavigator2: TDBNavigator
+    Left = 24
+    Height = 25
+    Top = 312
+    Width = 241
+    Anchors = [akLeft, akBottom]
+    BevelOuter = bvNone
+    ChildSizing.EnlargeHorizontal = crsScaleChilds
+    ChildSizing.EnlargeVertical = crsScaleChilds
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 100
+    ClientHeight = 25
+    ClientWidth = 241
+    DataSource = DataSource2
+    Options = []
+    TabOrder = 3
+  end
+  object SQLite3Connection1: TSQLite3Connection
+    Connected = True
+    LoginPrompt = False
+    DatabaseName = '/home/don/Documenten/data/chinook.db'
+    KeepConnection = False
+    Transaction = SQLTransaction1
+    AlwaysUseBigint = False
+    Left = 416
+    Top = 434
+  end
+  object SQLTransaction1: TSQLTransaction
+    Active = True
+    Database = SQLite3Connection1
+    Left = 560
+    Top = 434
+  end
+  object SQLQuery1: TSQLQuery
+    IndexName = 'DEFAULT_ORDER'
+    MaxIndexesCount = 4
+    FieldDefs = <    
+      item
+        Name = 'ArtistId'
+        DataType = ftAutoInc
+        Precision = -1
+      end    
+      item
+        Name = 'Name'
+        DataType = ftWideString
+        Precision = -1
+        Size = 120
+      end>
+    Active = True
+    Database = SQLite3Connection1
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      'SELECT * FROM artists'
+    )
+    Left = 687
+    Top = 434
+  end
+  object SQLQuery2: TSQLQuery
+    IndexName = 'DEFAULT_ORDER'
+    MaxIndexesCount = 4
+    FieldDefs = <    
+      item
+        Name = 'AlbumId'
+        DataType = ftAutoInc
+        Precision = -1
+      end    
+      item
+        Name = 'Title'
+        DataType = ftWideString
+        Precision = -1
+        Size = 160
+      end>
+    Active = True
+    Database = SQLite3Connection1
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      'select albums.AlbumId, albums.Title from albums where albums.ArtistId = :ArtistId'
+    )
+    Params = <    
+      item
+        DataType = ftAutoInc
+        Name = 'ArtistId'
+        ParamType = ptInput
+        Size = 4
+      end>
+    DataSource = DataSource1
+    Left = 821
+    Top = 434
+  end
+  object DataSource1: TDataSource
+    DataSet = SQLQuery1
+    Left = 687
+    Top = 364
+  end
+  object DataSource2: TDataSource
+    DataSet = SQLQuery2
+    Left = 821
+    Top = 364
+  end
+end
